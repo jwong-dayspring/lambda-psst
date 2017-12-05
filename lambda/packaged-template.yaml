@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A starter AWS Lambda function.
+Resources:
+  DeleteFunction:
+    Properties:
+      CodeUri: s3://jrw-psst-lambda/a0001c21d8002e1942945c86c4bccffb
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: Table
+      Events:
+        DeleteResource:
+          Properties:
+            Method: delete
+            Path: /resource/{resourceId}
+          Type: Api
+      Handler: lambda_function.delete
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: python2.7
+    Type: AWS::Serverless::Function
+  GetFunction:
+    Properties:
+      CodeUri: s3://jrw-psst-lambda/a0001c21d8002e1942945c86c4bccffb
+      Description: A starter AWS Lambda function.
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: Table
+      Events:
+        GetResource:
+          Properties:
+            Method: get
+            Path: /resource/{resourceId}
+          Type: Api
+      Handler: lambda_function.get
+      MemorySize: 128
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: python2.7
+      Timeout: 3
+    Type: AWS::Serverless::Function
+  PostFunction:
+    Properties:
+      CodeUri: s3://jrw-psst-lambda/a0001c21d8002e1942945c86c4bccffb
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: Table
+      Events:
+        PostResource:
+          Properties:
+            Method: post
+            Path: /resource
+          Type: Api
+      Handler: lambda_function.post
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: python2.7
+    Type: AWS::Serverless::Function
+  Table:
+    PrimaryKey:
+      Name: id
+      Type: String
+    Type: AWS::Serverless::SimpleTable
+Transform: AWS::Serverless-2016-10-31
