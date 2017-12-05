@@ -15,6 +15,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref Table
+          BASE_URL: 'https://psst.dayspring-tech.net'
       Events:
         GetResource:
           Type: Api
@@ -32,6 +33,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref Table
+          BASE_URL: 'https://psst.dayspring-tech.net'
       Events:
         PostResource:
           Type: Api
@@ -49,6 +51,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref Table
+          BASE_URL: 'https://psst.dayspring-tech.net'
       Events:
         DeleteResource:
           Type: Api

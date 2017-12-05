@@ -35,3 +35,5 @@ export function reducer(state: any, action: any) {
 export const getRouterPath = (state: State) => state.router.path;
 export const getMainPageState = (state: State) => state.mainPage;
 export const getPsstState = (state: State) => state.psst;
+
+export const getPsstMessage = createSelector(getPsstState, fromPsst.getPsstMessage);

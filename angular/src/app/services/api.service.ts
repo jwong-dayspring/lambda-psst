@@ -14,7 +14,7 @@ export class ApiService {
 
     constructor(private http: Http) {
         if (process.env.ENV === 'production') {
-            this.apiBaseUrl = '';
+            this.apiBaseUrl = 'https://qzst8reaei.execute-api.us-east-1.amazonaws.com/Prod';
         } else {
             this.apiBaseUrl = 'http://localhost:3000';
         }
@@ -31,7 +31,7 @@ export class ApiService {
         let requestOpts = new RequestOptions({ headers: headers });
 
         let url = `${ this.apiBaseUrl }${ this.serviceUrl }`;
-        return this.http.post(url, { content: message.content }, requestOpts)
+        return this.http.post(url, message, requestOpts)
             .map(response => response.json().uuid);
     }
 

@@ -1,5 +1,7 @@
 export interface OutboundMessage {
-    name: string;
-    email: string;
+    senderName: string;
+    senderEmail: string;
+    recipientName: string;
+    recipientEmai: string;
     content: string;
 }

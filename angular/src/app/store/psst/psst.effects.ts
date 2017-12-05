@@ -15,6 +15,7 @@ import * as psst from './psst.actions';
 import { go } from '@ngrx/router-store';
 import { ApiService } from '../../services/api.service';
 import { OutboundMessage } from 'src/app/models/outbound-message';
+import { Message } from 'src/app/models/message';
 
 
 @Injectable()
@@ -45,7 +46,32 @@ export class PsstEffects {
                 });
         });
 
-
+        @Effect()
+        getMessage$: Observable<Action> = this.actions$
+            .ofType(psst.ACTION.GET_MESSAGE)
+            .debounceTime(300)
+            .map((action: psst.GetMessageAction) => action.payload)
+            .switchMap((uuid: string) => {
+                const nextSearch$ = this.actions$.ofType(psst.ACTION.GET_MESSAGE).skip(1);
+    
+                console.log('getMessage');
+                // this.loaderService.show();
+                return this.apiService.get(uuid)
+                    .takeUntil(nextSearch$)
+                    .map((message: Message) => {
+                        return new psst.MessageRetrievedAction(message);
+                    })
+                    .catch((error: any) => {
+                        console.log(error);
+                        console.log('Could not get message.');
+                        return of({ type: 'NO_OP' });
+                    })
+                    .finally(() => {
+                        // this.loaderService.hide();
+                    });
+            });
+    
+    
     constructor(private actions$: Actions,
                 private store: Store<fromRoot.State>,
                 private apiService: ApiService) {

@@ -11,6 +11,7 @@ import * as fromMainPage from '../store/main-page/main-page.reducer';
 import * as page from '../store/main-page/main-page.actions';
 import { ApiService } from '../services/api.service';
 import { Message } from '../models/message';
+import { GetMessageAction } from '../store/psst/psst.actions';
 
 @Component({
   selector: 'message',
@@ -21,7 +22,7 @@ export class ReadMessageComponent implements OnInit {
   @Input() readOnly: boolean = false;
   pageState$: Observable<fromMainPage.State>;
 
-  private message: Observable<Message>;
+  private message$: Observable<Message>;
 
   private window = window;
   private subscriptions: Subscription[] = [];
@@ -37,16 +38,18 @@ export class ReadMessageComponent implements OnInit {
     this.pageState$.subscribe((state) => {
       this.readOnly = (state.readOnly !== undefined) ? state.readOnly : this.readOnly;
     });
+
+    this.message$ = this.store.select(fromRoot.getPsstMessage);
   }
 
   ngOnInit() {
-    this.message = this.route.params.switchMap((params: any) => {
-        let messageId = params['messageId'] || 0;
-        
-        return this.apiService.get(messageId);
+    this.route.params.subscribe((params: any) => {
+      let messageId = params['messageId'] || 0;
+      
+      this.store.dispatch(new GetMessageAction(messageId));
     });
 
-    this.message.subscribe(val => console.log(val));
+    this.message$.subscribe(val => console.log(val));
   }
 
 }

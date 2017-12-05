@@ -34,8 +34,10 @@ export class SendComponent implements OnInit {
 
   ngOnInit() {
     this.message = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', Validators.required],
+      senderName: ['', [Validators.required, Validators.minLength(2)]],
+      senderEmail: ['', Validators.required],
+      recipientName: ['', [Validators.required, Validators.minLength(2)]],
+      recipientEmail: ['', Validators.required],
       content: ['', [Validators.required, Validators.minLength(2)]],
     });
 

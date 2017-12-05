@@ -1,4 +1,9 @@
-Read a message
 <div class="jumbotron">
-    {{ (message|async)?.content }}
+    <div *ngIf="!(message$|async)">
+        Loading your secret message...
+    </div>
+    <div *ngIf="(message$|async)">
+        <p>From: {{ (message$|async)?.senderName }}</p>
+        <p>{{ (message$|async)?.content }}</p>
+    </div>
 </div>

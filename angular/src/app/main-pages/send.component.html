@@ -1,35 +1,64 @@
 <div class="jumbotron">
   <div *ngIf="(pageState$|async)?.sendEditing">
   <form novalidate (ngSubmit)="onSubmit(message)" [formGroup]="message">
-    <div class="form-group" [ngClass]="{'has-warning': hasError('name')}">
+    <div class="form-group" [ngClass]="{'has-warning': hasError('senderName')}">
       <label class="form-control-label">
-        <span>Full name</span>
+        <span>Your name</span>
         <input
           type="text"
           class="form-control" 
-          formControlName="name"
+          formControlName="senderName"
           placeholder="Your full name">
-        <div class="form-control-feedback" *ngIf="hasError('name', 'required')">
-          Name is required
+        <div class="form-control-feedback" *ngIf="hasError('senderName', 'required')">
+          Your Name is required
         </div>
-        <div class="form-control-feedback" *ngIf="hasError('name', 'minlength')">
-          Name must be at least 2 charecters long.
+        <div class="form-control-feedback" *ngIf="hasError('senderName', 'minlength')">
+          Your Name must be at least 2 charecters long.
         </div>
       </label>
     </div>
-    <div class="form-group" [ngClass]="{'has-warning': hasError('email')}">
+    <div class="form-group" [ngClass]="{'has-warning': hasError('senderEmail')}">
       <label class="form-control-label">
-        <span>Email address</span>
+        <span>Your Email address</span>
         <input
           type="email"
           class="form-control" 
-          formControlName="email"
+          formControlName="senderEmail"
           placeholder="Your email address">
       </label>
-      <div class="form-control-feedback" *ngIf="hasError('email', 'required')">
-        Email is required
+      <div class="form-control-feedback" *ngIf="hasError('senderEmail', 'required')">
+        Your Email is required
       </div>
     </div>
+    <div class="form-group" [ngClass]="{'has-warning': hasError('recipientName')}">
+      <label class="form-control-label">
+        <span>Recipient name</span>
+        <input
+          type="text"
+          class="form-control" 
+          formControlName="recipientName"
+          placeholder="Recipient name">
+        <div class="form-control-feedback" *ngIf="hasError('recipientName', 'required')">
+            Recipient Name is required
+        </div>
+        <div class="form-control-feedback" *ngIf="hasError('recipientName', 'minlength')">
+            Recipient Name must be at least 2 charecters long.
+        </div>
+      </label>
+    </div>
+    <div class="form-group" [ngClass]="{'has-warning': hasError('recipientEmail')}">
+      <label class="form-control-label">
+        <span>Recipient Email address</span>
+        <input
+          type="email"
+          class="form-control" 
+          formControlName="recipientEmail"
+          placeholder="Recipient email address">
+      </label>
+      <div class="form-control-feedback" *ngIf="hasError('recipientEmail', 'required')">
+          Recipient Email is required
+      </div>
+    </div>      
     <div class="form-group" [ngClass]="{'has-warning': hasError('content')}">
       <label class="form-control-label">
         <span>Content</span>

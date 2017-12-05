@@ -5,6 +5,9 @@ import boto3
 import os
 import uuid
 
+from botocore.exceptions import ClientError
+
+baseUrl = os.getenv("BASE_URL")
 
 # Get the service resource.
 dynamodb = boto3.resource('dynamodb')
@@ -50,9 +53,15 @@ def post(event, context):
     table.put_item(
         Item={
             'uuid': itemUuid,
-            'content': body['content']
+            'content': body['content'],
+            'senderName': body['senderName'],
+            'senderEmail': body['senderEmail'],
+            'recipientName': body['recipientName'],
+            'recipientEmail': body['recipientEmail'],
         }
     )
+
+    sendEmail(body['recipientName'], body['recipientEmail'], body['senderName'], '', itemUuid)
 
     return {
         'statusCode': 200,
@@ -78,3 +87,61 @@ def delete(event, context):
         'statusCode': response['ResponseMetadata']['HTTPStatusCode']
     }    
     
+
+def sendEmail(recipientName, recipientEmail, senderName, senderEmail, itemUuid):
+    SUBJECT = "Psst, %s, %s sent you a secret" % (recipientName, senderName )
+
+    # The email body for recipients with non-HTML email clients.
+    BODY_TEXT = ("Psst, %s,\n"
+                "%s is sending you a secret.\n"
+                "Go to %s/#/message/%s to read your secret.") % ( recipientName, senderName, baseUrl, itemUuid )
+                
+    # The HTML body of the email.
+    BODY_HTML = """<html>
+    <head></head>
+    <body>
+    <h1>Psst, %s,</h1>
+    <p>%s is sending you a secret. Read your secret at
+        <a href='%s/#/message/%s'>%s/#/message/%s</a></a>.</p>
+    </body>
+    </html>""" % ( recipientName, senderName, baseUrl, itemUuid, baseUrl, itemUuid )
+
+    # The character encoding for the email.
+    CHARSET = "UTF-8"
+
+    # Create a new SES resource and specify a region.
+    client = boto3.client('ses')
+
+    # Try to send the email.
+    try:
+        #Provide the contents of the email.
+        response = client.send_email(
+            Destination={
+                'ToAddresses': [
+                    recipientEmail,
+                ],
+            },
+            Message={
+                'Body': {
+                    'Html': {
+                        'Charset': CHARSET,
+                        'Data': BODY_HTML,
+                    },
+                    'Text': {
+                        'Charset': CHARSET,
+                        'Data': BODY_TEXT,
+                    },
+                },
+                'Subject': {
+                    'Charset': CHARSET,
+                    'Data': SUBJECT,
+                },
+            },
+            Source="psst@dayspring-tech.net",
+        )
+    # Display an error if something goes wrong.	
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        print("Email sent! Message ID:"),
+        print(response['ResponseMetadata']['RequestId'])
