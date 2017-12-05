@@ -1,0 +1,26 @@
+<div class="jumbotron">
+    <form novalidate (ngSubmit)="onSubmit(message)" [formGroup]="message">
+      <div class="form-group" [ngClass]="{'has-warning': hasError('uuid')}">
+        <label class="form-control-label">
+          <span>Message ID</span>
+          <input
+            type="text"
+            class="form-control" 
+            formControlName="uuid"
+            placeholder="Message ID">
+          <div class="form-control-feedback" *ngIf="hasError('uuid', 'required')">
+            Message ID is required
+          </div>
+          <div class="form-control-feedback" *ngIf="hasError('uuid', 'minlength')">
+            Message ID must be at least 2 charecters long.
+          </div>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="message.invalid">Get Message</button>
+    <!-- {{ user.value | json }} -->
+    </form>
+  </div>
+  <ul>
+    <li *ngIf="window.HOVER_INTERFACE">User can hover.</li>
+    <li *ngIf="window.TOUCH_INTERFACE">User is using touch interface.</li>
+  </ul>

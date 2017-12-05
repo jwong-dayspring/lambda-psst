@@ -59,5 +59,5 @@ Resources:
   Table:
     Type: AWS::Serverless::SimpleTable
     PrimaryKey:
-      Name: id
+      Name: uuid
       Type: String

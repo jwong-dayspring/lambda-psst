@@ -1,0 +1,59 @@
+<div class="jumbotron">
+  <div *ngIf="(pageState$|async)?.sendEditing">
+  <form novalidate (ngSubmit)="onSubmit(message)" [formGroup]="message">
+    <div class="form-group" [ngClass]="{'has-warning': hasError('name')}">
+      <label class="form-control-label">
+        <span>Full name</span>
+        <input
+          type="text"
+          class="form-control" 
+          formControlName="name"
+          placeholder="Your full name">
+        <div class="form-control-feedback" *ngIf="hasError('name', 'required')">
+          Name is required
+        </div>
+        <div class="form-control-feedback" *ngIf="hasError('name', 'minlength')">
+          Name must be at least 2 charecters long.
+        </div>
+      </label>
+    </div>
+    <div class="form-group" [ngClass]="{'has-warning': hasError('email')}">
+      <label class="form-control-label">
+        <span>Email address</span>
+        <input
+          type="email"
+          class="form-control" 
+          formControlName="email"
+          placeholder="Your email address">
+      </label>
+      <div class="form-control-feedback" *ngIf="hasError('email', 'required')">
+        Email is required
+      </div>
+    </div>
+    <div class="form-group" [ngClass]="{'has-warning': hasError('content')}">
+      <label class="form-control-label">
+        <span>Content</span>
+        <textarea
+          class="form-control" 
+          formControlName="content"
+          placeholder="Your message"></textarea>
+      </label>
+      <div class="form-control-feedback" *ngIf="hasError('content', 'required')">
+        Message is required
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="message.invalid">Send Psst</button>
+  <!-- {{ user.value | json }} -->
+  </form>
+  </div>
+  <div *ngIf="!(pageState$|async)?.sendEditing">
+    <h4>Message Sent</h4>
+    <p>Message ID: {{ (pageState$|async)?.uuid }}</p>
+    <p></p>
+    <a class="btn btn-primary" (click)="resetSend()">Send Another</a> 
+  </div>
+</div>
+<ul>
+  <li *ngIf="window.HOVER_INTERFACE">User can hover.</li>
+  <li *ngIf="window.TOUCH_INTERFACE">User is using touch interface.</li>
+</ul>

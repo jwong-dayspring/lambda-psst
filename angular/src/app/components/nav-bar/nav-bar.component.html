@@ -1,0 +1,10 @@
+<nav class="header">
+  <nav class="navbar flex-row justify-content-between">
+    <a class="navbar-brand" href="#">Psst...</a>
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a class="nav-link" [ngClass]="{'active': active.send}" (click)="go('send')">Send</a></li>
+      <li class="nav-item"><a class="nav-link" [ngClass]="{'active': active.read}" (click)="go('read')">Read</a></li>
+      <li class="nav-item"><a class="nav-link" [ngClass]="{'active': active.about}" (click)="go('about')">About</a></li>
+    </ul>
+  </nav>
+</nav>

@@ -57,7 +57,7 @@ Resources:
     Type: AWS::Serverless::Function
   Table:
     PrimaryKey:
-      Name: id
+      Name: uuid
       Type: String
     Type: AWS::Serverless::SimpleTable
 Transform: AWS::Serverless-2016-10-31
