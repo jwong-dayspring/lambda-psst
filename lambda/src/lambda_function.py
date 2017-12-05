@@ -26,7 +26,7 @@ def get(event, context):
 
     response = table.get_item(
         Key={
-            'uuid': event['pathParameters']['resourceId']
+            'id': event['pathParameters']['resourceId']
         }
     )
     item = response['Item']
@@ -37,6 +37,7 @@ def get(event, context):
         'body': json.dumps(item),
         'headers': {
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*' 
         },
     }
 
@@ -52,7 +53,7 @@ def post(event, context):
 
     table.put_item(
         Item={
-            'uuid': itemUuid,
+            'id': itemUuid,
             'content': body['content'],
             'senderName': body['senderName'],
             'senderEmail': body['senderEmail'],
@@ -68,6 +69,7 @@ def post(event, context):
         'body': json.dumps({'uuid':itemUuid}),
         'headers': {
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
         },
     }
     
@@ -78,13 +80,16 @@ def delete(event, context):
 
     response = table.delete_item(
         Key={
-            'uuid': event['pathParameters']['resourceId']
+            'id': event['pathParameters']['resourceId']
         }
     )
     print(response)
     
     return {
-        'statusCode': response['ResponseMetadata']['HTTPStatusCode']
+        'statusCode': response['ResponseMetadata']['HTTPStatusCode'],
+        'headers': {
+            'Access-Control-Allow-Origin': '*'
+        }
     }    
     
 

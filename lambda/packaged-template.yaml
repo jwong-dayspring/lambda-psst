@@ -1,11 +1,35 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: A starter AWS Lambda function.
+Outputs:
+  ApiUrl:
+    Description: URL of your API endpoint
+    Value:
+      Fn::Join:
+      - ''
+      - - https://
+        - Ref: ApiGatewayApi
+        - .execute-api.
+        - Ref: AWS::Region
+        - .amazonaws.com/Prod
 Resources:
+  ApiGatewayApi:
+    Properties:
+      DefinitionUri: s3://jrw-psst-lambda/35bce0eb433a61bc43c23667bf655953
+      StageName: Prod
+      Variables:
+        DeleteFunctionName:
+          Ref: DeleteFunction
+        GetFunctionName:
+          Ref: GetFunction
+        PostFunctionName:
+          Ref: PostFunction
+    Type: AWS::Serverless::Api
   DeleteFunction:
     Properties:
-      CodeUri: s3://jrw-psst-lambda/a0001c21d8002e1942945c86c4bccffb
+      CodeUri: s3://jrw-psst-lambda/29abe3de7f16d3242a7b2f5e49f08a95
       Environment:
         Variables:
+          BASE_URL: https://psst.dayspring-tech.net
           TABLE_NAME:
             Ref: Table
       Events:
@@ -13,6 +37,8 @@ Resources:
           Properties:
             Method: delete
             Path: /resource/{resourceId}
+            RestApiId:
+              Ref: ApiGatewayApi
           Type: Api
       Handler: lambda_function.delete
       Policies: AmazonDynamoDBFullAccess
@@ -20,10 +46,11 @@ Resources:
     Type: AWS::Serverless::Function
   GetFunction:
     Properties:
-      CodeUri: s3://jrw-psst-lambda/a0001c21d8002e1942945c86c4bccffb
+      CodeUri: s3://jrw-psst-lambda/29abe3de7f16d3242a7b2f5e49f08a95
       Description: A starter AWS Lambda function.
       Environment:
         Variables:
+          BASE_URL: https://psst.dayspring-tech.net
           TABLE_NAME:
             Ref: Table
       Events:
@@ -31,6 +58,8 @@ Resources:
           Properties:
             Method: get
             Path: /resource/{resourceId}
+            RestApiId:
+              Ref: ApiGatewayApi
           Type: Api
       Handler: lambda_function.get
       MemorySize: 128
@@ -40,9 +69,10 @@ Resources:
     Type: AWS::Serverless::Function
   PostFunction:
     Properties:
-      CodeUri: s3://jrw-psst-lambda/a0001c21d8002e1942945c86c4bccffb
+      CodeUri: s3://jrw-psst-lambda/29abe3de7f16d3242a7b2f5e49f08a95
       Environment:
         Variables:
+          BASE_URL: https://psst.dayspring-tech.net
           TABLE_NAME:
             Ref: Table
       Events:
@@ -50,6 +80,8 @@ Resources:
           Properties:
             Method: post
             Path: /resource
+            RestApiId:
+              Ref: ApiGatewayApi
           Type: Api
       Handler: lambda_function.post
       Policies: AmazonDynamoDBFullAccess

@@ -61,6 +61,7 @@
     "webpack": "^3.8.0",
     "webpack-dev-server": "^2.0.0",
     "webpack-merge": "~4.1.0",
+    "webpack-s3-plugin": "^1.0.0-rc.0",
     "zone.js": "^0.8.0"
   }
 }

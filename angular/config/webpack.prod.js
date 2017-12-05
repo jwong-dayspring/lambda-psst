@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var S3Plugin = require('webpack-s3-plugin');
 var commonConfig = require('./webpack.common.js');
 var helpers = require('./helpers');
 
@@ -28,6 +29,22 @@ module.exports = webpackMerge(commonConfig, {
       'process.env': {
         'ENV': JSON.stringify(ENV)
       }
-    })
+    }),
+    new S3Plugin({
+      // Exclude uploading of html 
+      // exclude: /.*\.html$/,
+      // s3Options are required 
+      s3Options: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: 'us-east-1'
+      },
+      s3UploadOptions: {
+        Bucket: 'jrw-psst-angular'
+      },
+      cdnizerOptions: {
+        defaultCDNBase: 'https://psst.dayspring-tech.net'
+      }
+    })    
   ]
 });

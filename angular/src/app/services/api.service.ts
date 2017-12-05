@@ -14,7 +14,7 @@ export class ApiService {
 
     constructor(private http: Http) {
         if (process.env.ENV === 'production') {
-            this.apiBaseUrl = 'https://qzst8reaei.execute-api.us-east-1.amazonaws.com/Prod';
+            this.apiBaseUrl = 'https://qg9z9owfpk.execute-api.us-east-1.amazonaws.com/Prod';
         } else {
             this.apiBaseUrl = 'http://localhost:3000';
         }
