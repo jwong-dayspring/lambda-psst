@@ -2,20 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: A starter AWS Lambda function.
 Resources:
-  ApiGatewayApi:
-    Type: AWS::Serverless::Api
-    Properties:
-      DefinitionUri: ./swagger.yaml
-      StageName: Prod
-      Variables:
-        # NOTE: Before using this template, replace the <<region>> and <<account>> fields
-        #       in Lambda integration URI in the swagger file to region and accountId 
-        #       you are deploying to
-        GetFunctionName: !Ref GetFunction
-        PostFunctionName: !Ref PostFunction
-        DeleteFunctionName: !Ref DeleteFunction
-
-
   GetFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -34,7 +20,6 @@ Resources:
         GetResource:
           Type: Api
           Properties:
-            RestApiId: !Ref ApiGatewayApi
             Path: /resource/{resourceId}
             Method: get
 
@@ -55,7 +40,6 @@ Resources:
         PostResource:
           Type: Api
           Properties:
-            RestApiId: !Ref ApiGatewayApi
             Path: /resource
             Method: post
 
@@ -74,7 +58,6 @@ Resources:
         DeleteResource:
           Type: Api
           Properties:
-            RestApiId: !Ref ApiGatewayApi
             Path: /resource/{resourceId}
             Method: delete
 
@@ -83,14 +66,3 @@ Resources:
     PrimaryKey:
       Name: uuid
       Type: String
-
-Outputs:
-  ApiUrl:
-    Description: URL of your API endpoint
-    Value: !Join
-      - ''
-      - - https://
-        - !Ref ApiGatewayApi
-        - '.execute-api.'
-        - !Ref 'AWS::Region'
-        - '.amazonaws.com/Prod'
