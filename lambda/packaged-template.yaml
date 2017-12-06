@@ -14,7 +14,7 @@ Outputs:
 Resources:
   ApiGatewayApi:
     Properties:
-      DefinitionUri: s3://jrw-psst-lambda/35bce0eb433a61bc43c23667bf655953
+      DefinitionUri: s3://jrw-psst-lambda/31f5a03a274772c73c7cbb8abe3ff463
       StageName: Prod
       Variables:
         DeleteFunctionName:
@@ -29,7 +29,7 @@ Resources:
       CodeUri: s3://jrw-psst-lambda/29abe3de7f16d3242a7b2f5e49f08a95
       Environment:
         Variables:
-          BASE_URL: https://psst.dayspring-tech.net
+          BASE_URL: http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com
           TABLE_NAME:
             Ref: Table
       Events:
@@ -50,7 +50,7 @@ Resources:
       Description: A starter AWS Lambda function.
       Environment:
         Variables:
-          BASE_URL: https://psst.dayspring-tech.net
+          BASE_URL: http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com
           TABLE_NAME:
             Ref: Table
       Events:
@@ -72,7 +72,7 @@ Resources:
       CodeUri: s3://jrw-psst-lambda/29abe3de7f16d3242a7b2f5e49f08a95
       Environment:
         Variables:
-          BASE_URL: https://psst.dayspring-tech.net
+          BASE_URL: http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com
           TABLE_NAME:
             Ref: Table
       Events:
@@ -84,7 +84,9 @@ Resources:
               Ref: ApiGatewayApi
           Type: Api
       Handler: lambda_function.post
-      Policies: AmazonDynamoDBFullAccess
+      Policies:
+      - AmazonDynamoDBFullAccess
+      - arn:aws:iam::445549561793:policy/LambdaSESSendEmail
       Runtime: python2.7
     Type: AWS::Serverless::Function
   Table:

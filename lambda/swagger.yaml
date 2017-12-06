@@ -6,12 +6,12 @@ info:
 schemes:
 - https
 paths:
-  /resource/{uuid+}:
+  /resource/{resourceId+}:
     get:
       produces:
       - application/json
       parameters:
-        - name: uuid
+        - name: resourceId
           in: path
           required: true
           type: string
@@ -48,7 +48,7 @@ paths:
       produces:
       - application/json
       parameters:
-        - name: uuid
+        - name: resourceId
           in: path
           required: true
           type: string

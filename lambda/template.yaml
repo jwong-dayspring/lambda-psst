@@ -29,7 +29,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref Table
-          BASE_URL: 'https://psst.dayspring-tech.net'
+          BASE_URL: 'http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com'
       Events:
         GetResource:
           Type: Api
@@ -44,11 +44,13 @@ Resources:
       Runtime: python2.7
       Handler: lambda_function.post
       CodeUri: ./src
-      Policies: AmazonDynamoDBFullAccess
+      Policies: 
+        - AmazonDynamoDBFullAccess
+        - arn:aws:iam::445549561793:policy/LambdaSESSendEmail
       Environment:
         Variables:
           TABLE_NAME: !Ref Table
-          BASE_URL: 'https://psst.dayspring-tech.net'
+          BASE_URL: 'http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com'
       Events:
         PostResource:
           Type: Api
@@ -67,7 +69,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref Table
-          BASE_URL: 'https://psst.dayspring-tech.net'
+          BASE_URL: 'http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com'
       Events:
         DeleteResource:
           Type: Api
