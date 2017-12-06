@@ -6,7 +6,7 @@ Resources:
       CodeUri: s3://jrw-psst-lambda/29abe3de7f16d3242a7b2f5e49f08a95
       Environment:
         Variables:
-          BASE_URL: http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com
+          BASE_URL: https://jrw-psst.dayspring-tech.net
           TABLE_NAME:
             Ref: Table
       Events:
@@ -25,7 +25,7 @@ Resources:
       Description: A starter AWS Lambda function.
       Environment:
         Variables:
-          BASE_URL: http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com
+          BASE_URL: https://jrw-psst.dayspring-tech.net
           TABLE_NAME:
             Ref: Table
       Events:
@@ -45,7 +45,7 @@ Resources:
       CodeUri: s3://jrw-psst-lambda/29abe3de7f16d3242a7b2f5e49f08a95
       Environment:
         Variables:
-          BASE_URL: http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com
+          BASE_URL: https://jrw-psst.dayspring-tech.net
           TABLE_NAME:
             Ref: Table
       Events:

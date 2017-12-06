@@ -15,7 +15,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref Table
-          BASE_URL: 'http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com'
+          BASE_URL: 'https://jrw-psst.dayspring-tech.net'
       Events:
         GetResource:
           Type: Api
@@ -35,7 +35,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref Table
-          BASE_URL: 'http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com'
+          BASE_URL: 'https://jrw-psst.dayspring-tech.net'
       Events:
         PostResource:
           Type: Api
@@ -53,7 +53,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref Table
-          BASE_URL: 'http://jrw-psst-angular.s3-website-us-east-1.amazonaws.com'
+          BASE_URL: 'https://jrw-psst.dayspring-tech.net'
       Events:
         DeleteResource:
           Type: Api

@@ -14,8 +14,8 @@ export class ApiService {
 
     constructor(private http: Http) {
         if (process.env.ENV === 'production') {
-            this.apiBaseUrl = 'https://ws6rexe883.execute-api.us-east-1.amazonaws.com/Prod/';
-            
+            // hosted via cloudfront, with behavior to route /resource to api gateway
+            this.apiBaseUrl = 'https://jrw-psst.dayspring-tech.net';            
         } else {
             this.apiBaseUrl = 'http://localhost:3000';
         }
